@@ -1,0 +1,12 @@
+.question-box{
+    text-align: left;
+    
+    h3:nth-child(1){
+        margin-top: 0;
+    }
+
+    .spans{
+        display: flex;
+        justify-content: space-between;
+    }
+}
