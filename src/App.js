@@ -1,12 +1,15 @@
-import StartPage from "./components/start-page/StartPage";
-import './app.scss'
-import Questions from "./components/questionsPage/questions";
+import { Routes, Route } from "react-router-dom";
+import { Header, QuestionsSettings, Question } from "./components/import";
+import "./app.scss";
 
 function App() {
   return (
     <div className="App">
-      <StartPage />
-      <Questions />
+      <Header />
+      <Routes>
+        <Route path="/" element={<QuestionsSettings />} />
+        <Route path="/questions/:id" element={<Question />} />
+      </Routes>
     </div>
   );
 }

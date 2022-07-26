@@ -1,0 +1,56 @@
+.settings-choose {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  // align-items: center;
+
+  input#number {
+    width: 50%;
+    border-radius: 0.3rem;
+    padding: 0.6rem;
+    border: none;
+    font-size: large;
+    margin-block: 0.5rem;
+    color: rgba(0, 98, 255, 0.89);
+    background-color: rgba(0, 0, 0, 0.244);
+    // border: 1px solid blue;
+  }
+
+  select {
+    width: 50%;
+    border-radius: 0.3rem;
+    padding: 0.6rem;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.244);
+    font-size: large;
+    margin-block: 0.5rem;
+    color: rgba(0, 98, 255, 0.89);
+    // border: 1px solid blue;
+  }
+
+  label {
+    margin-block: 0.5rem;
+    color: black;
+    font-size: 1.3rem;
+  }
+  button {
+    cursor: pointer;
+    padding: 0.5rem;
+  }
+
+  select:focus {
+    outline: none80;
+  }
+  input#number:focus {
+    outline: none;
+  }
+  .start {
+    border: none;
+    color: white;
+    padding: 1rem;
+    background-color: rgba(0, 98, 255, 0.89);
+    margin-top: 8px;
+    width: 200px;
+  }
+}
