@@ -15,7 +15,8 @@ const QuestionsSettings = () => {
     number: 0,
     category: "",
     difficulty: "",
-    type: ""
+    type: "",
+    categoryId: 0
   });
 
   let type;
@@ -25,8 +26,8 @@ const QuestionsSettings = () => {
     type = "boolean";
   }
 
-  const url = `/api.php?amount=${
-    questions.number
+  const url = `/api.php?amount=${questions.number}&category=${
+    questions.categoryId
   }&difficulty=${questions.difficulty.toLowerCase()}&type=${type}`;
 
   useEffect(() => {
@@ -35,11 +36,27 @@ const QuestionsSettings = () => {
 
   const { category } = useSelector((state) => state.questions);
 
+  console.log(questions.categoryId);
+
   function handleQuestions(e) {
-    setQuestions({
-      ...questions,
-      [e.target.id]: e.target.value
+    let categoryId;
+    category?.trivia_categories.forEach((item) => {
+      if (e.target.value === item.name) {
+        categoryId = item.id;
+      }
     });
+    if (categoryId) {
+      setQuestions({
+        ...questions,
+        [e.target.id]: e.target.value,
+        categoryId
+      });
+    } else {
+      setQuestions({
+        ...questions,
+        [e.target.id]: e.target.value
+      });
+    }
   }
 
   return (
@@ -85,8 +102,7 @@ const QuestionsSettings = () => {
         <option>True / False</option>
       </select>
       <button
-        className="start
-      "
+        className="start"
         onClick={() => {
           navigate("questions/1");
           dispatch(getUrl(url));

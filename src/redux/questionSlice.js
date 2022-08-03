@@ -53,24 +53,13 @@ export const questionSlice = createSlice({
     },
     [fetchLbn.fulfilled]: (state, action) => {
       state.mappedArray = action.payload.results;
-
+      console.log(state.mappedArray);
       state.mappedArray?.forEach((item, ind) => {
-        // const answersData = [
-        //   { id: 1, value: false },
-        //   { id: 2, value: false },
-        //   { id: 3, value: false },
-        //   { id: 4, value: false }
-        // ];
         const arr = [...item.incorrect_answers, item.correct_answer];
         arr.sort(() => 0.5 - Math.random());
 
-        // answersData.forEach((ele, ind) => {
-        //   return (ele.answer = arr[ind]);
-        // });
-
         item.data = arr;
       });
-      // state.data = state.mappedArray?.data;
     }
   }
 });

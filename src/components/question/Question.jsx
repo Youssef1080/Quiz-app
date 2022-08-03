@@ -10,14 +10,15 @@ const Question = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
-  const { url } = useSelector((state) => state.questions);
   const [showResult, setShowResult] = useState(false);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [state, setState] = useState([]);
   const [chooseAnswer, setChoseAnswer] = useState(0);
 
   const answer = useRef();
-  const { mappedArray } = useSelector((state) => state.questions);
+  const { mappedArray, url } = useSelector((state) => state.questions);
+
+  console.log(mappedArray, url);
 
   useEffect(() => {
     dispatch(fetchLbn(url));
