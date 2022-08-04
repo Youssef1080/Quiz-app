@@ -1,9 +1,10 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux/es/exports";
 import { useEffect, useState, useRef } from "react";
 import { fetchQuestions, fetchLbn } from "../../redux/questionSlice";
 import { decode } from "html-entities";
 import { Answers } from "../import";
+import Loader from "../loader/Loader";
 import "./question.scss";
 
 const Question = () => {
@@ -12,6 +13,7 @@ const Question = () => {
   const { id } = useParams();
   const [showResult, setShowResult] = useState(false);
   const [correctAnswers, setCorrectAnswers] = useState(0);
+  const [selected, setSelected] = useState(undefined);
   const [userAnswers, setUserAnswers] = useState([]);
   const [theAnswer, setTheAnswer] = useState("");
   const [chooseAnswer, setChoseAnswer] = useState(0);
@@ -19,39 +21,31 @@ const Question = () => {
   const answer = useRef();
   const { mappedArray, url } = useSelector((state) => state.questions);
 
-  console.log(mappedArray, url);
-
   useEffect(() => {
     dispatch(fetchLbn(url));
   }, []);
 
-  if (!mappedArray) {
-    return <div>...Loading</div>;
+  if (!mappedArray.length) {
+    return <Loader />;
   }
 
   const question = mappedArray[id - 1];
 
-  // function choose(id) {
-  //   setState((prev) =>
-  //     prev.data.map((item) =>
-  //       item.id == id ? { ...item, value: true } : { ...item, value: false }
-  //     )
-  //   );
-  // }
-
-  // console.log(question.data);
-
   function check(answer) {
-    let arr = [];
-    if (answer === question.correct_answer) {
+    if (answer === question?.correct_answer) {
       setCorrectAnswers(correctAnswers + 1);
     }
-    // arr.push(answer)
   }
-  console.log(correctAnswers);
+
+  function handleSelected(item) {
+    if (item === selected) {
+      return "selected";
+    }
+  }
+  // console.log(correctAnswers, question?.correct_answer);
 
   return (
-    <>
+    <div>
       {!showResult && (
         <div className="question-cont">
           <h2>Question {id}</h2>
@@ -60,12 +54,11 @@ const Question = () => {
             {question?.data?.map((item, ind) => (
               <button
                 key={ind}
-                className="answer"
-                onClick={
-                  (e) => setTheAnswer(e.target.textContent)
-
-                  // check(e.target.textContent);
-                }
+                className={`answer ${selected && handleSelected(item)}`}
+                onClick={(e) => {
+                  setSelected(item);
+                  setTheAnswer(e.target.textContent);
+                }}
               >
                 {decode(item)}
               </button>
@@ -74,18 +67,22 @@ const Question = () => {
 
           {id < mappedArray?.length ? (
             <button
+              className="next-btn"
               onClick={() => {
                 check(theAnswer);
                 navigate(`/questions/${parseInt(id) + 1}`);
+                setSelected(undefined);
               }}
             >
-              Next
+              &rarr;
             </button>
           ) : (
             <button
+              className="showgrade-btn"
               onClick={() => {
                 setShowResult(true);
                 check(theAnswer);
+                setSelected(undefined);
               }}
             >
               Show Grade
@@ -94,11 +91,19 @@ const Question = () => {
         </div>
       )}
       {showResult && (
-        <h4>
-          you scored {correctAnswers} right of {mappedArray.length}
-        </h4>
+        <div>
+          <h4 className="score">
+            You scored <span>{correctAnswers}</span> answers right of{" "}
+            {mappedArray.length}
+          </h4>
+          <button className="return-btn">
+            <Link to={"/"} className="return">
+              Go to Settings page
+            </Link>
+          </button>
+        </div>
       )}
-    </>
+    </div>
   );
 };
 

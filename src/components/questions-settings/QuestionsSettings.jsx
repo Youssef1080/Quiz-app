@@ -36,7 +36,7 @@ const QuestionsSettings = () => {
 
   const { category } = useSelector((state) => state.questions);
 
-  console.log(questions.categoryId);
+  // console.log(questions.categoryId);
 
   function handleQuestions(e) {
     let categoryId;
@@ -62,6 +62,13 @@ const QuestionsSettings = () => {
   return (
     <div className="settings-choose">
       <h2>Choose your questions settings</h2>
+      {/* <form
+        action=""
+        onSubmit={() => {
+          navigate("questions/1");
+          dispatch(getUrl(url));
+        }}
+      > */}
       <label id="number">Enter the number of questions: </label>
       <input
         // placeholder="Enter the number of questions"
@@ -70,6 +77,7 @@ const QuestionsSettings = () => {
         value={questions.number}
         onChange={handleQuestions}
         name="number"
+        required={true}
       />
       <label id="category">Select Category:</label>
       <select
@@ -101,15 +109,20 @@ const QuestionsSettings = () => {
         <option>Multiple Choice</option>
         <option>True / False</option>
       </select>
+      {/* <input type="submit" /> */}
       <button
+        type={"submit"}
         className="start"
         onClick={() => {
-          navigate("questions/1");
-          dispatch(getUrl(url));
+          if (questions.number > 0) {
+            navigate("questions/1");
+            dispatch(getUrl(url));
+          }
         }}
       >
         Start Quiz
       </button>
+      {/* </form> */}
     </div>
   );
 };

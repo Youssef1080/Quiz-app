@@ -1,5 +1,10 @@
 import { Routes, Route } from "react-router-dom";
-import { Header, QuestionsSettings, Question } from "./components/import";
+import {
+  Header,
+  QuestionsSettings,
+  Question,
+  Footer
+} from "./components/import";
 import "./app.scss";
 
 function App() {
@@ -10,6 +15,7 @@ function App() {
         <Route path="/" element={<QuestionsSettings />} />
         <Route path="/questions/:id" element={<Question />} />
       </Routes>
+      <Footer />
     </div>
   );
 }

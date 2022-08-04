@@ -24,7 +24,8 @@ const initialState = {
   category: [],
   url: "",
   mappedArray: [],
-  data: []
+  data: [],
+  userAnswersArr: []
 };
 
 export const questionSlice = createSlice({
@@ -45,6 +46,9 @@ export const questionSlice = createSlice({
     },
     getUrl: (state, action) => {
       state.url = action.payload;
+    },
+    setAnswersUser: (state, action) => {
+      state.userAnswersArr.push();
     }
   },
   extraReducers: {
@@ -53,7 +57,7 @@ export const questionSlice = createSlice({
     },
     [fetchLbn.fulfilled]: (state, action) => {
       state.mappedArray = action.payload.results;
-      console.log(state.mappedArray);
+      // console.log(state.mappedArray);
       state.mappedArray?.forEach((item, ind) => {
         const arr = [...item.incorrect_answers, item.correct_answer];
         arr.sort(() => 0.5 - Math.random());
