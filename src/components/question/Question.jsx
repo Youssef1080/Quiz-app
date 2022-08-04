@@ -12,7 +12,8 @@ const Question = () => {
   const { id } = useParams();
   const [showResult, setShowResult] = useState(false);
   const [correctAnswers, setCorrectAnswers] = useState(0);
-  const [state, setState] = useState([]);
+  const [userAnswers, setUserAnswers] = useState([]);
+  const [theAnswer, setTheAnswer] = useState("");
   const [chooseAnswer, setChoseAnswer] = useState(0);
 
   const answer = useRef();
@@ -41,11 +42,13 @@ const Question = () => {
   // console.log(question.data);
 
   function check(answer) {
+    let arr = [];
     if (answer === question.correct_answer) {
       setCorrectAnswers(correctAnswers + 1);
-      // correctAnswers.current = correctAnswers.current + 1;
     }
+    // arr.push(answer)
   }
+  console.log(correctAnswers);
 
   return (
     <>
@@ -58,9 +61,11 @@ const Question = () => {
               <button
                 key={ind}
                 className="answer"
-                onClick={(e) => {
-                  check(e.target.textContent);
-                }}
+                onClick={
+                  (e) => setTheAnswer(e.target.textContent)
+
+                  // check(e.target.textContent);
+                }
               >
                 {decode(item)}
               </button>
@@ -70,14 +75,21 @@ const Question = () => {
           {id < mappedArray?.length ? (
             <button
               onClick={() => {
-                check();
+                check(theAnswer);
                 navigate(`/questions/${parseInt(id) + 1}`);
               }}
             >
               Next
             </button>
           ) : (
-            <button onClick={() => setShowResult(true)}>Show Grade</button>
+            <button
+              onClick={() => {
+                setShowResult(true);
+                check(theAnswer);
+              }}
+            >
+              Show Grade
+            </button>
           )}
         </div>
       )}
