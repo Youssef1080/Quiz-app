@@ -3,9 +3,18 @@
   position: absolute;
   bottom: 0;
   text-align: center;
+  // background-color: rgba(0, 0, 0, 0.229);
   width: 100%;
   color: rgba(0, 98, 255, 0.89);
+  white-space: nowrap;
   padding: 2rem;
   font-weight: bold;
   font-size: 1.3rem;
+  // margin-top: 11.2rem;
+}
+
+@media (max-width: 480px) {
+  .footer {
+    font-size: 12px;
+  }
 }

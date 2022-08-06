@@ -5,3 +5,9 @@
   color: white;
   font-size: 2rem;
 }
+
+@media (max-width: 480px) {
+  .header {
+    font-size: 1.4rem;
+  }
+}
